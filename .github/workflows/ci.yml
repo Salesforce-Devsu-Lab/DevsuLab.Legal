@@ -19,7 +19,7 @@ jobs:
         # GitHub Application ID value.
         application_id: ${{ secrets.GH_DEVSUAPP_APP_ID }}
     outputs:
-      access_token: ${{ steps.get_workflow_token.outputs.token }}
+      token: ${{ steps.get_workflow_token.outputs.token }}
   # Generate The next Tag Version Number
   generate-version:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
         config-file: nuget.config
       env:
         VERSION: ${{ needs.generate-version.outputs.new_version }}
-        NUGET_AUTH_TOKEN:  ${{ needs.generate-token.outputs.access_token }}
+        NUGET_AUTH_TOKEN:  ${{ needs.generate-token.outputs.token }}
         
    
 
