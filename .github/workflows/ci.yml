@@ -7,10 +7,12 @@ on:
 jobs:
   generate-version:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: peter-murray/workflow-application-token-action@v2.1.0
+    - uses: actions/checkout@v3
+
     - name: workflow-application-token-action
+    - uses: peter-murray/workflow-application-token-action@v2.1.0
       with:
         # GitHub Application Private Key value.
         application_private_key: ${{ secrets.GH_DEVSUAPP_PRIVATE_KEY }}
