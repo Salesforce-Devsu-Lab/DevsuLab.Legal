@@ -10,11 +10,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
     - name: workflow-application-token-action
+      id: get_workflow_token
       uses: peter-murray/workflow-application-token-action@v2.1.0
       with:
         # GitHub Application Private Key value.
         application_private_key: ${{ secrets.GH_DEVSUAPP_PRIVATE_KEY }}
         # GitHub Application ID value.
         application_id: ${{ secrets.GH_DEVSUAPP_APP_ID }}
+    outputs:
+      new_access_token: ${{ steps.get_workflow_token.outputs.token }}
