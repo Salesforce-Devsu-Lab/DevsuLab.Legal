@@ -5,9 +5,9 @@ on:
     branches: [ "main" ]
     
 jobs:
-  generate-version:
+  #Generate Access Token
+  generate-token:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: workflow-application-token-action
@@ -18,5 +18,18 @@ jobs:
         application_private_key: ${{ secrets.GH_DEVSUAPP_PRIVATE_KEY }}
         # GitHub Application ID value.
         application_id: ${{ secrets.GH_DEVSUAPP_APP_ID }}
+  #Generate The next Tag Version Number
+  generate-version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: anothrNick/github-tag-action@1.67.0
+    - name: github-tab-action
+      id: get_tag_bump
+      env:
+        GITHUB_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+        RELEASE_BRANCHES: main
+        INITIAL_VERSION: 1.0.0
+        DEFAULT_BUMP: patch
+        WITH_V: false 
     outputs:
-      new_access_token: ${{ steps.get_workflow_token.outputs.token }}
+      new_version: ${{ steps.get_tag_bump.outputs.new_tag }}
