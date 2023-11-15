@@ -18,6 +18,8 @@ jobs:
         application_private_key: ${{ secrets.GH_DEVSUAPP_PRIVATE_KEY }}
         # GitHub Application ID value.
         application_id: ${{ secrets.GH_DEVSUAPP_APP_ID }}
+    outputs:
+      access_token: ${{ steps.get_workflow_token.outputs.token }}
   # Generate The next Tag Version Number
   generate-version:
     runs-on: ubuntu-latest
@@ -49,8 +51,8 @@ jobs:
         source-url: https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
         config-file: nuget.config
       env:
-        VERSION: ${{ steps.get_tag_bump.outputs.new_version }}
-        NUGET_AUTH_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+        VERSION: ${{ needs.generate-version.outputs.new_version }}
+        NUGET_AUTH_TOKEN:  ${{ needs.generate-token.outputs.access_token }}
         
    
 
