@@ -7,16 +7,12 @@ on:
 jobs:
   generate-version:
     runs-on: ubuntu-latest
+    
     steps:
+    - uses: peter-murray/workflow-application-token-action@v2.1.0
     - name: workflow-application-token-action
-    uses: peter-murray/workflow-application-token-action@v2.1.0
-    with:
-      # GitHub Application Private Key value.
-      application_private_key: ${{ secrets.GH_DEVSUAPP_PRIVATE_KEY }}
-      # GitHub Application ID value.
-      application_id: ${{ secrets.GH_DEVSUAPP_APP_ID }}
-
-    - uses: actions/checkout@v3
       with:
-        token: ${{ steps.get_workflow_token.outputs.token }}
-        repository: Salesforce-Devsu-Lab/DevsuLab.Legal
+        # GitHub Application Private Key value.
+        application_private_key: ${{ secrets.GH_DEVSUAPP_PRIVATE_KEY }}
+        # GitHub Application ID value.
+        application_id: ${{ secrets.GH_DEVSUAPP_APP_ID }}
