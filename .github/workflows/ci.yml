@@ -37,7 +37,19 @@ jobs:
         config-file: nuget.config
       env:
         VERSION: ${{ needs.generate-version.outputs.new_version }}
-        NUGET_AUTH_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
-        
-   
-
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Pack
+    - name: Pack
+      run: |
+          if [ -z "${{ needs.generate-version.outputs.new_version }}" ]; then
+            echo "PackageVersion is not set. Aborting..."
+            exit 1
+          fi
+          dotnet pack src/Devsulab.Common/ \
+          --configuration Release \
+          -p:PackageVersion=${{ needs.generate-version.outputs.new_version }} \
+          -p:RepositoryUrl=https://github.com/${{github.repository_owner}}/DevsubLab.Legal \
+          -o packages
+    # Publish
+    - name: Publish
+      run: dotnet nuget push packages/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/${{ github.repository_owner }}"
