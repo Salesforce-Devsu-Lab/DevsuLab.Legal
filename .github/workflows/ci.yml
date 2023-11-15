@@ -49,8 +49,8 @@ jobs:
         source-url: https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
         config-file: nuget.config
       env:
-        NUGET_AUTH_TOKEN: ${{ needs.generate-token.outputs.token }}
-        VERSION: ${{ needs.generate-version.outputs.new_version }}
+        NUGET_AUTH_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+        VERSION: ${{ steps.get_tag_bump.outputs.new_version }}
         
    
 
