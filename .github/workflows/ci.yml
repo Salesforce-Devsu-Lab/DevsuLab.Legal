@@ -45,7 +45,7 @@ jobs:
             echo "PackageVersion is not set. Aborting..."
             exit 1
           fi
-          dotnet pack src/Devsulab.Common/ \
+          dotnet pack src/Devsulab.Legal/ \
           --configuration Release \
           -p:PackageVersion=${{ needs.generate-version.outputs.new_version }} \
           -p:RepositoryUrl=https://github.com/${{github.repository_owner}}/DevsubLab.Legal \
